@@ -18,7 +18,24 @@
     #grid(columns: (1fr, 5fr), align: (horizon, center), exp, automata)
   ]
 }
-#exercise[15 pts][
+
+
+#exercise[10 pts][
+  Demuestre que el lenguaje $L = {0^n 1^m: n!= m}$ no es regular.
+]
+#proof[
+  Procedamos por contrapositiva y veamos que $L$ no satisface el _lema del bombeo_. Dado $n in NN$ consideremos la
+  siguiente cadena $w$ dada por $w = 0^n 1^(n! + n)$, se puede ver que $w in L$ pues para todo $n in NN$ se tiene que $n! + n > n$.
+  Luego para toda descomposición $w = x y z$ de $w$ con $abs(x y) <= n$ y $abs(y)>0$ se debe cumplir que $x=0^(n-k)$, $y = 0^k$ y $z = 1^(n! + n)$ para
+  algún $k in {1, dots, n}$. Entonces, dado $k in {1, dots, n}$ consideremos una de tales descomposiciones, es decir, $w = x y z$ con $x=0^(n-k)$, $y = 0^k$ y $z = 1^(n! + n)$,
+  es claro que $n!/k in NN$ dado que $1<= k <=n$, y notemos que $x y^(n!/k + 1) z in.not L$, pues
+  $
+    x y^(n!/k + 1) z = 0^(n-k) (0^k)^(n!/k + 1) 1^(n! + n) = 0^(n-k) 0^(k n!/k + k) 1^(n! + n) = 0^n 0^n! 1^(n! + n) = 0^(n! + n)1^(n! + n) .
+  $
+  De lo anterior, dado que $n$ fue arbitrario tenemos que $L$ no puede ser regular, pues no cumple el _lema del bombeo_.
+]
+
+#exercise[10 pts][
   Convierte las siguientes ERs en AFNDs usando el método visto en clase (Teorema 1.54 de @Sipser_2013). Para todos los
   casos usa $Sigma = {a,b}$.
   #set enum(numbering: "A.")
@@ -134,7 +151,7 @@
   Encuentra una ER que represente el lenguaje de todas las cadenas de 0's y 1's que no contienen la subcadena $110$
 ]
 
-#exercise[15 pts][
+#exercise[10 pts][
   Convierte el siguiente AFND en AFNDGs y luego reducelo quitando un estado a la vez hasta obtener una ER.
   #align(
     center,
