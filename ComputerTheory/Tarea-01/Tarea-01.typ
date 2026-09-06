@@ -202,20 +202,6 @@ en @Martin_2011 que básicamente nos dicen a que estado(s) podemos llegar inicia
 
 ]
 
-// #exercise[20 pts][
-//   Demuestre que el lenguaje $L = {0^n 1^m: n!= m}$ no es regular.
-// ]
-// #proof[
-//   Procedamos por contrapositiva y veamos que $L$ no satisface el _lema del bombeo_. Dado $n in NN$ consideremos la
-//   siguiente cadena $w$ dada por $w = 0^n 1^(n! + n)$, se puede ver que $w in L$ pues para todo $n in NN$ se tiene que $n! + n > n$.
-//   Luego para toda descomposición $w = x y z$ de $w$ con $abs(x y) <= n$ y $abs(y)>0$ se debe cumplir que $x=0^(n-k)$, $y = 0^k$ y $z = 1^(n! + n)$ para
-//   algún $k in {1, dots, n}$. Entonces, dado $k in {1, dots, n}$ consideremos una de tales descomposiciones, es decir, $w = x y z$ con $x=0^(n-k)$, $y = 0^k$ y $z = 1^(n! + n)$,
-//   es claro que $n!/k in NN$ dado que $1<= k <=n$, y notemos que $x y^(n!/k + 1) z in.not L$, pues
-//   $
-//     x y^(n!/k + 1) z = 0^(n-k) (0^k)^(n!/k + 1) 1^(n! + n) = 0^(n-k) 0^(k n!/k + k) 1^(n! + n) = 0^n 0^n! 1^(n! + n) = 0^(n! + n)1^(n! + n) .
-//   $
-//   De lo anterior, dado que $n$ fue arbitrario tenemos que $L$ no puede ser regular, pues no cumple el _lema del bombeo_.
-// ]
 
 #exercise[20 pts][
   Dado $w in Sigma^*$ una palabra y $L subset Sigma^*$ un lenguaje, definimos $L_omega = {x in Sigma^*: w x in L}$.
