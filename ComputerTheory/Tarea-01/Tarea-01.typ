@@ -7,7 +7,7 @@
   title: [Tarea 1],
   student: [Antonio Barragán Romero],
   student_email: "antonio.barragan@cimat.mx",
-  date: datetime(day: 24, month: 8, year: 2025),
+  date: datetime(day: 24, month: 8, year: 2026),
 )
 
 #show "automata": [autómata]
