@@ -33,6 +33,13 @@
     x y^(n!/k + 1) z = 0^(n-k) (0^k)^(n!/k + 1) 1^(n! + n) = 0^(n-k) 0^(k n!/k + k) 1^(n! + n) = 0^n 0^n! 1^(n! + n) = 0^(n! + n)1^(n! + n) .
   $
   De lo anterior, dado que $n$ fue arbitrario tenemos que $L$ no puede ser regular, pues no cumple el _lema del bombeo_.
+
+  Otra forma de demostrarlo es suponiendo que $L$ es _regular_, entonces $L^complement$ también es _regular_, luego, dado que $0^*1^*$ es claramente regular,
+  pues es concatenación de dos lenguajes regulares, obtenemos que $B := L^complement inter 0^*1^*$ debe ser _regular_. Sin embargo, notemos que
+  $
+    B := L^complement inter 0^*1^* = {0^n 1^n: n in NN_0 },
+  $
+  es cual sabemos no es _regular_, obtenemos asi una contradicción y por tanto $L$ no es _regular_.
 ]
 
 #exercise[10 pts][
