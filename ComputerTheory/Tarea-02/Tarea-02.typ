@@ -26,11 +26,13 @@
 #proof[
   Procedamos por contrapositiva y veamos que $L$ no satisface el _lema del bombeo_. Dado $n in NN$ consideremos la
   siguiente cadena $w$ dada por $w = 0^n 1^(n! + n)$, se puede ver que $w in L$ pues para todo $n in NN$ se tiene que $n! + n > n$.
-  Luego para toda descomposición $w = x y z$ de $w$ con $abs(x y) <= n$ y $abs(y)>0$ se debe cumplir que $x=0^(n-k)$, $y = 0^k$ y $z = 1^(n! + n)$ para
-  algún $k in {1, dots, n}$. Entonces, dado $k in {1, dots, n}$ consideremos una de tales descomposiciones, es decir, $w = x y z$ con $x=0^(n-k)$, $y = 0^k$ y $z = 1^(n! + n)$,
-  es claro que $n!/k in NN$ dado que $1<= k <=n$, y notemos que $x y^(n!/k + 1) z in.not L$, pues
+  Luego para toda descomposición $w = x y z$ de $w$ con $abs(x y) <= n$ y $abs(y)>0$ se debe cumplir que $x=0^(n-k-i)$, $y = 0^k$ y $z = 0^i 1^(n! + n)$ para
+  algún $k in {1, dots, n}$ y algún $i in {0,1, dots, n-1}$ de tal manera que $abs(x y) = n-l-i +k = n-i <=n$
+  . Entonces, dado $k in {1, dots, n}$ la longitud de $y$, consideremos una de tales descomposiciones, es decir, $w = x y z$ con $x=0^(n-k -i)$, $y = 0^k$ y $z = 0^i 1^(n! + n)$,
+  para algún $i in {0,1, dots, n-1}$, es claro que $n!/k in NN$ dado que $1<= k <=n$, y notemos que $x y^(n!/k + 1) z in.not L$, pues
   $
-    x y^(n!/k + 1) z = 0^(n-k) (0^k)^(n!/k + 1) 1^(n! + n) = 0^(n-k) 0^(k n!/k + k) 1^(n! + n) = 0^n 0^n! 1^(n! + n) = 0^(n! + n)1^(n! + n) .
+    x y^(n!/k + 1) z &= 0^(n-k -i) (0^k)^(n!/k + 1) 0^i 1^(n! + n) = 0^(n-k -i ) 0^(k n!/k + k) 0^i 1^(n! + n) \
+                     &= 0^(n-k-i) 0^(n! +k) 0^i 1^(n! + n)= 0^n 0^n! 1^(n! + n) = 0^(n! + n)1^(n! + n),
   $
   De lo anterior, dado que $n$ fue arbitrario tenemos que $L$ no puede ser regular, pues no cumple el _lema del bombeo_.
 
