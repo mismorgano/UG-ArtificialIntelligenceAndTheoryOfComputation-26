@@ -1,6 +1,6 @@
 #import "@local/tortugui:0.1.0": template, proof, solution
 #import "../definitions.typ": apply_definitions, exercise, gris, deriv, words, eps
-#import "@preview/finite:0.5.0" as finite: automaton
+#import "@preview/finite:0.5.1" as finite: automaton, cetz
 #import "@preview/flautomat:0.1.0": flautomat
 #show: template.with(
   course: [Inteligencia Artificial y Teoría de la Computación],
@@ -13,9 +13,15 @@
 )
 #show: apply_definitions
 // #let eps =  $epsilon$
+
+#let automaton = finite.automaton.with(state-format: label => "", style: (
+  state: (radius: 0.2, fill: gris, stroke: black + 0.5pt, extrude: 0.66),
+  // q5: (radius: 0.3),
+  transition: (curve: 0.01, stroke: black + 0.5pt, angle:(0deg)),
+))
 #let format_step(exp, automata) = {
   align(center)[
-    #grid(columns: (1fr, 5fr), align: (horizon, center), exp, automata)
+    #grid(columns: (1fr, 5fr), align: (horizon + left, center), exp, automata)
   ]
 }
 
@@ -72,90 +78,191 @@
     ]
     #format_step()[$(a b b)^*$][
       #scale(automaton(
-        (
-          q6: (q7: none),
-          q7: (q0: none),
-          q0: (q1: "a"),
-          q1: (q2: 0),
-          q2: (q3: "b"),
-          q3: (q4: 0),
-          q4: (q5: "b"),
-          q5: (q7: none),
-        ),
+        (q6: (q0: $eps$), q0: (q1: "a"), q1: (q2: 0), q2: (q3: "b"), q3: (q4: 0), q4: (q5: "b"), q5: (q0: $eps$)),
         initial: "q6",
-        final: "q6",
-        labels: (q1-q2: $epsilon$, q3-q4: $epsilon$, q6-q7: $epsilon$, q7-q0: $epsilon$),
+        final: ("q6", "q5",),
+        labels: (q1-q2: $epsilon$, q3-q4: $epsilon$),
         state-format: label => "",
         style: (
           state: (radius: 0.2, fill: gris, stroke: black + 0.5pt, extrude: 0.66),
           // q5: (radius: 0.3),
           transition: (curve: 0.01, stroke: black + 0.5pt),
-          q5-q7: (curve: 1),
+          q5-q0: (curve: 1, label: (dist: -0.22)),
         ),
       ))
     ]
     #format_step()[$a(a b b)^*$][
       #scale(automaton(
         (
-          q6: (q7: none),
-          q7: (q0: none),
+          q8: (q7: "a"),
+          q7: (q6: $eps$),
+          q6: (q0: $eps$),
           q0: (q1: "a"),
           q1: (q2: 0),
           q2: (q3: "b"),
           q3: (q4: 0),
           q4: (q5: "b"),
-          q5: (q7: none),
+          q5: (q0: $eps$),
         ),
-        // layout: finite.layout.group.with(grouping: ((),("q0", "q1", "q2", "q3", "q4", "q6"), ("q5", "q7")), layout: (finite.layout.linear, finite.layout.linear.with(dir: left))),
-        layout: finite.layout.custom.with(positions: (q6: (0, 0), q7: (2, -3), rest:( rel: (1.6, 0)))),
-        initial: "q6",
-        final: "q6",
-        labels: (q1-q2: $epsilon$, q3-q4: $epsilon$, q6-q7: $epsilon$, q7-q0: $epsilon$),
+        initial: "q8",
+        final: ("q6", "q5",),
+        labels: (q1-q2: $epsilon$, q3-q4: $epsilon$),
         state-format: label => "",
         style: (
           state: (radius: 0.2, fill: gris, stroke: black + 0.5pt, extrude: 0.66),
           // q5: (radius: 0.3),
-          transition: (curve: 0.0, stroke: black + 0.5pt),
-          q5-q7: (curve: -1, anchor: top),
+          transition: (curve: 0.01, stroke: black + 0.5pt),
+          q5-q0: (curve: 1, label: (dist: -0.22)),
         ),
       ))
     ]
+    #format_step()[$a(a b b)^* union b $][
+      #scale(automaton(
+        (
+          q8: (q9: $eps$, q10: $eps$),
+          q9: (q7: "a"),
+          q7: (q6: $eps$),
+          q6: (q0: $eps$),
+          q0: (q1: "a"),
+          q1: (q2: 0),
+          q2: (q3: "b"),
+          q3: (q4: 0),
+          q4: (q5: "b"),
+          q5: (q0: $eps$),
+          q10: (q11: "b"),
+        ),
+        // layout: finite.layout.group.with(
+        //   grouping: (("q8",), ("q0", "q1", "q2", "q3", "q4", "q5", "q6", "q7",), ("q9", "q10",)),
+        //   layout: (finite.layout.custom.with(positions: (q8:(-2, -1))),
+        //   finite.layout.custom.with(positions: (q7: (0, 1))),
+        //   finite.layout.custom.with(positions: (q10: (0, -1)))),
+        // ),
+        layout: (q8: (0, 0), q9: (1, 1), q10: (1, -1), rest: (rel: (1.3, 0))),
+        initial: "q8",
+        final: ("q6", "q5", "q11"),
+        labels: (q1-q2: $epsilon$, q3-q4: $epsilon$),
+        state-format: label => "",
+        style: (
+          state: (radius: 0.2, fill: gris, stroke: black + 0.5pt, extrude: 0.66),
+          // q5: (radius: 0.3),
+          transition: (curve: 0.01, stroke: black + 0.5pt),
+          q5-q0: (curve: 1, label: (dist: -0.22)),
+        ),
+      ))
+    ]
+  + Recordemos que $R^+ = R R^*$. Recremoslo paso a pasarlo
+    #format_step()[$ a$][
+      #scale(automaton((q0: (q1: "a"), q1: none)))
+    ]
+    #format_step()[$a^*$][
+      #scale(automaton((p0: (p1: $eps$), p1: (p2: "a"), p2: (p1: $eps$)), final: ("p0", "p2"), style: (
+        state: (radius: 0.2, fill: gris, stroke: black + 0.5pt, extrude: 0.66),
+        // q5: (radius: 0.3),
+        transition: (curve: 0.01, stroke: black + 0.5pt),
+        p2-p1: (curve: .5),
+      )))
+    ]
+    #format_step()[$a^+ := a a^*$][
+      #scale(automaton(
+        (q0: (q1: "a"), q1: (p0: $eps$), p0: (p1: $eps$), p1: (p2: "a"), p2: (p1: $eps$)),
+        final: ("p0", "p2"),
+        style: (
+          state: (radius: 0.2, fill: gris, stroke: black + 0.5pt, extrude: 0.66),
+          // q5: (radius: 0.3),
+          transition: (curve: 0.01, stroke: black + 0.5pt),
+          p2-p1: (curve: .5),
+        ),
+      ))
+    ]
+    #format_step()[$(a b)^*$][
+      #scale(automaton(
+        (r0: (r1: $eps$), r1: (r2: $a$), r2: (r3: $eps$), r3: (r4: $b$), r4: (r1: $eps$)),
+        final: ("r0", "r4"),
+        style: (
+          state: (radius: 0.2, fill: gris, stroke: black + 0.5pt, extrude: 0.66),
+          // q5: (radius: 0.3),
+          transition: (curve: 0.01, stroke: black + 0.5pt),
+          r4-r1: (curve: .8),
+        ),
+      ))
+    ]
+    #format_step()[$a^+ union (a b)^*$][
+      #scale(automaton(
+        (
+          s: (q0: $eps$, r0: $eps$),
+          q0: (q1: "a"),
+          q1: (p0: $eps$),
+          p0: (p1: $eps$),
+          p1: (p2: "a"),
+          p2: (p1: $eps$),
+          r0: (r1: $eps$),
+          r1: (r2: $a$),
+          r2: (r3: $eps$),
+          r3: (r4: $b$),
+          r4: (r1: $eps$),
+        ),
+        layout: (s: (0, 0), q0: (1, 1), r0: (1, -1), rest: (rel: (1.3, 0))),
+        final: ("p0", "p2", "r0", "r4"),
+        style: (
+          state: (radius: 0.2, fill: gris, stroke: black + 0.5pt, extrude: 0.66),
+          // q5: (radius: 0.3),
+          transition: (curve: 0.01, stroke: black + 0.5pt),
+          r4-r1: (curve: .8),
+          p2-p1: (curve: .5),
+          s-r0: (label: (dist: -0.3), angle: (0deg))
+        ),
+      ))
+    ]
+  + Usando los automatas construidos en el inciso anterior obtenemos que:
+    #format_step()[$ a$][
+      #scale(automaton((q0: (q1: $a$), q1: none)))
+    ]
+    #format_step()[$b^+ := b b^*$][
+      #scale(automaton(
+        (b0: (q1: $b$), q1: (p0: $eps$), p0: (p1: $eps$), p1: (p2: $b$), p2: (p1: $eps$)),
+        final: ("p0", "p2"),
+        style: (
+          state: (radius: 0.2, fill: gris, stroke: black + 0.5pt, extrude: 0.66),
+          // q5: (radius: 0.3),
+          transition: (curve: 0.01, stroke: black + 0.5pt),
+          p2-p1: (curve: .5),
+        ),
+      ))
+    ]
+    #format_step()[$a union b^+$][
+      #scale(automaton((
+        u0: (q0: ($eps$), b0: $eps$),
+        q0: (q1: $a$),
+        q1: none,
+        b0: (r1: $b$),
+        r1: (p0: $eps$),
+        p0: (p1: $eps$),
+        p1: (p2: $b$),
+        p2: (p1: $eps$),
+      ),
+      layout: (u0: (0, 0), q0:(1, 1), b0:(1, -1), rest: (rel:(1.2, 0))),
+
+       final: ("q1", "p0", "p2", ), style: (
+        state: (radius: 0.2, fill: gris, stroke: black + 0.5pt, extrude: 0.66),
+        // q5: (radius: 0.3),
+        transition: (curve: 0.01, stroke: black + 0.5pt),
+        p2-p1: (curve: .5),
+      )))
+    ]
+    #format_step()[$a^+ := a a^*$][
+      #scale(automaton(
+        (a0: (q1: "a"), q1: (p0: $eps$), p0: (p1: $eps$), p1: (p2: "a"), p2: (p1: $eps$)),
+        final: ("p0", "p2"),
+        style: (
+          state: (radius: 0.2, fill: gris, stroke: black + 0.5pt, extrude: 0.66),
+          // q5: (radius: 0.3),
+          transition: (curve: 0.01, stroke: black + 0.5pt),
+          p2-p1: (curve: .5),
+        ),
+      ))
+    ]
+
 ]
-#scale(
-  80%,
-  automaton(
-    (
-      q0: (q1: 0, q2: 0),
-      q2: (q3: 1, q4: 0),
-      q4: (q2: 0, q5: 0, q6: 0),
-      q6: (q7: 1),
-      q1: (q3: 1, q4: 0),
-      q3: (q1: 1, q5: 1, q6: 1),
-      q5: (q7: 1),
-      q7: (),
-    ),
-    layout: finite.layout.group.with(grouping: (("q0",), ("q1", "q2", "q3", "q4", "q5", "q6"), ("q7",)), spacing: 2, layout: (
-      finite.layout.custom.with(positions: (q0: (0, -2))),
-      finite.layout.grid.with(columns: 3, spacing: 2.6, position: (2, 1)),
-      finite.layout.custom.with(positions: (q7: (8, 6))),
-    )),
-    style: (
-      transition: (curve: 0),
-      q1-q3: (curve: 1),
-      q3-q1: (curve: 1),
-      q2-q4: (curve: 1),
-      q4-q2: (curve: 1),
-      q1-q4: (label: (pos: .75)),
-      q2-q3: (label: (pos: .75, dist: -.33)),
-      q3-q6: (label: (pos: .75)),
-      q4-q5: (label: (pos: .75, dist: -.33)),
-      q4-q6: (curve: 1),
-    ),
-  ),
-)
-#automaton((q0: (q1: 1), q1: (q0: 1)), style: (q1-q0: (curve: -1), q0-q1: (curve: -1)), layout: finite.layout.linear.with(dir: left))
-#automaton((q0: (q1: 1), q1: (q0: 1)), style: (q1-q0: (curve: -1), q0-q1: (curve: -1)), layout: finite.layout.linear.with(dir: right))
-// #flautomat(json("../Tarea-01/problema1.json"))
 
 #exercise[10 pts][
   Encuentra una ER que represente el lenguaje de todas las cadenas de 0's y 1's que no contienen la subcadena $110$
