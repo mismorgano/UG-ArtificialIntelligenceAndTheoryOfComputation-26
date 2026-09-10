@@ -17,7 +17,7 @@
 #let automaton = finite.automaton.with(state-format: label => "", style: (
   state: (radius: 0.2, fill: gris, stroke: black + 0.5pt, extrude: 0.66),
   // q5: (radius: 0.3),
-  transition: (curve: 0.01, stroke: black + 0.5pt, angle:(0deg)),
+  transition: (curve: 0.01, stroke: black + 0.5pt, angle: (0deg)),
 ))
 #let format_step(exp, automata) = {
   align(center)[
@@ -61,8 +61,10 @@
 ]
 #solution[
   #set enum(numbering: "A.")
-  + Al igual Hagamoslo paso a paso
-    #format_step()[abb][
+  Al igual que en @Sipser_2013 hagamoslo paso a paso.
+  Vamos a saltarnos los pasos pequeños, es claro que se podrían remover algunas $eps$-transiciones, sin embargo las dejaremos por completitud.
+  + Para la ER $a(a b b)^* union b$ tenemos lo siguiente:
+    #format_step()[$a b b$][
       #scale(automaton(
         ((q0: (q1: "a"), q1: (q2: 0), q2: (q3: "b"), q3: (q4: 0), q4: (q5: "b"))),
         initial: "q0",
@@ -120,23 +122,17 @@
       #scale(automaton(
         (
           q8: (q9: $eps$, q10: $eps$),
-          q9: (q7: "a"),
+          q9: (q7: $a$),
           q7: (q6: $eps$),
           q6: (q0: $eps$),
-          q0: (q1: "a"),
+          q0: (q1: $a$),
           q1: (q2: 0),
-          q2: (q3: "b"),
+          q2: (q3: $b$),
           q3: (q4: 0),
-          q4: (q5: "b"),
+          q4: (q5: $b$),
           q5: (q0: $eps$),
-          q10: (q11: "b"),
+          q10: (q11: $b$),
         ),
-        // layout: finite.layout.group.with(
-        //   grouping: (("q8",), ("q0", "q1", "q2", "q3", "q4", "q5", "q6", "q7",), ("q9", "q10",)),
-        //   layout: (finite.layout.custom.with(positions: (q8:(-2, -1))),
-        //   finite.layout.custom.with(positions: (q7: (0, 1))),
-        //   finite.layout.custom.with(positions: (q10: (0, -1)))),
-        // ),
         layout: (q8: (0, 0), q9: (1, 1), q10: (1, -1), rest: (rel: (1.3, 0))),
         initial: "q8",
         final: ("q6", "q5", "q11"),
@@ -145,12 +141,13 @@
         style: (
           state: (radius: 0.2, fill: gris, stroke: black + 0.5pt, extrude: 0.66),
           // q5: (radius: 0.3),
-          transition: (curve: 0.01, stroke: black + 0.5pt),
+          transition: (curve: 0.01, stroke: black + 0.5pt, angle: 0deg),
           q5-q0: (curve: 1, label: (dist: -0.22)),
+          q8-q10: (label: (dist: -0.33)),
         ),
       ))
     ]
-  + Recordemos que $R^+ = R R^*$. Recremoslo paso a pasarlo
+  + Para le ER $a^+ union (a b)^+$ recordemos que $R^+ = R R^*$ y obtenemos que:
     #format_step()[$ a$][
       #scale(automaton((q0: (q1: "a"), q1: none)))
     ]
@@ -190,10 +187,10 @@
       #scale(automaton(
         (
           s: (q0: $eps$, r0: $eps$),
-          q0: (q1: "a"),
+          q0: (q1: $a$),
           q1: (p0: $eps$),
           p0: (p1: $eps$),
-          p1: (p2: "a"),
+          p1: (p2: $a$),
           p2: (p1: $eps$),
           r0: (r1: $eps$),
           r1: (r2: $a$),
@@ -206,14 +203,14 @@
         style: (
           state: (radius: 0.2, fill: gris, stroke: black + 0.5pt, extrude: 0.66),
           // q5: (radius: 0.3),
-          transition: (curve: 0.01, stroke: black + 0.5pt),
+          transition: (curve: 0.01, stroke: black + 0.5pt, angle: 0deg),
           r4-r1: (curve: .8),
           p2-p1: (curve: .5),
-          s-r0: (label: (dist: -0.3), angle: (0deg))
+          s-r0: (label: (dist: -0.33), angle: (0deg)),
         ),
       ))
     ]
-  + Usando los automatas construidos en el inciso anterior obtenemos que:
+  + Para la ER $(a union b^+)a^+b^+$ usemos algunos autómatas construidos en el inciso anterior para obtener:
     #format_step()[$ a$][
       #scale(automaton((q0: (q1: $a$), q1: none)))
     ]
@@ -231,33 +228,69 @@
     ]
     #format_step()[$a union b^+$][
       #scale(automaton((
-        u0: (q0: ($eps$), b0: $eps$),
+        u0: (q0: ($eps$), r0: $eps$),
         q0: (q1: $a$),
         q1: none,
-        b0: (r1: $b$),
+        r0: (r1: $b$),
         r1: (p0: $eps$),
         p0: (p1: $eps$),
         p1: (p2: $b$),
         p2: (p1: $eps$),
-      ),
-      layout: (u0: (0, 0), q0:(1, 1), b0:(1, -1), rest: (rel:(1.2, 0))),
-
-       final: ("q1", "p0", "p2", ), style: (
+      ), layout: (u0: (0, 0), q0: (1, 1), r0: (1, -1), rest: (rel: (1.2, 0))), final: ("q1", "p0", "p2",), style: (
         state: (radius: 0.2, fill: gris, stroke: black + 0.5pt, extrude: 0.66),
         // q5: (radius: 0.3),
-        transition: (curve: 0.01, stroke: black + 0.5pt),
+        transition: (curve: 0.01, stroke: black + 0.5pt, angle: 0deg),
         p2-p1: (curve: .5),
+        u0-r0: (label: (dist: -0.33)),
       )))
     ]
     #format_step()[$a^+ := a a^*$][
       #scale(automaton(
-        (a0: (q1: "a"), q1: (p0: $eps$), p0: (p1: $eps$), p1: (p2: "a"), p2: (p1: $eps$)),
-        final: ("p0", "p2"),
+        (a0: (a1: $a$), a1: (a2: $eps$), a2: (a3: $eps$), a3: (a4: $a$), a4: (a3: $eps$)),
+        final: ("a2", "a4"),
         style: (
           state: (radius: 0.2, fill: gris, stroke: black + 0.5pt, extrude: 0.66),
           // q5: (radius: 0.3),
           transition: (curve: 0.01, stroke: black + 0.5pt),
-          p2-p1: (curve: .5),
+          a4-a3: (curve: 0.5),
+        ),
+      ))
+    ]
+    #format_step()[$(a union b^+)a^+b^+$][
+      #scale(automaton(
+        (
+          u0: (q0: ($eps$), r0: $eps$),
+          q0: (q1: $a$),
+          q1: (a0: $eps$),
+          r0: (r1: $b$),
+          r1: (p0: $eps$),
+          p0: (p1: $eps$),
+          p1: (p2: $b$),
+          p2: (p1: $eps$, a0: $eps$),
+          a0: (a1: $a$),
+          a1: (a2: $eps$),
+          a2: (a3: $eps$, b0: ($eps$)),
+          a3: (a4: $a$),
+          a4: (a3: $eps$, b0: ($eps$)),
+          b0: (b1: $b$),
+          b1: (b2: $eps$),
+          b2: (b3: $eps$),
+          b3: (b4: $b$),
+          b4: (b3: $eps$),
+        ),
+        layout: (u0: (0, 0), q0: (1, -1), r0: (1, 1), a0: (4, -1), b0: (6.5, 1), rest: (rel: (1.2, 0))),
+        final: ("b2", "b4"),
+        style: (
+          state: (radius: 0.2, fill: gris, stroke: black + 0.5pt, extrude: 0.66),
+          // q5: (radius: 0.3),
+          transition: (curve: 0.01, stroke: black + 0.5pt, angle: 0deg),
+          p2-p1: (curve: 0.5, label: (dist: 0.2)),
+          a4-a3: (curve: 0.5),
+          b4-b3: (curve: 0.5),
+          p2-a0: (curve: 0.5, label: (dist: 0.2, pos: 0.4)),
+          a0-a1: (label: (dist: -0.32)),
+          a4-b0: (curve: -0.5),
+          u0-q0: (label: (dist: -0.33)),
         ),
       ))
     ]
