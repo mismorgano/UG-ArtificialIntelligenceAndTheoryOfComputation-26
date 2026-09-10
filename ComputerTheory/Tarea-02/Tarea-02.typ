@@ -308,13 +308,20 @@
   )[
     #figure(
       finite.automaton(
-        (q1: (q2: "e", q3: "a"), q2: (q1: "a"), q3: (q2: "a, b", q3: "b")),
+        (q1: (q2: $eps$, q3: $a$), q2: (q1: $a$), q3: (q2: $a, b$, q3: "b")),
         initial: "q1",
         final: "q2",
-        labels: (q1: [1], q2: [2], q3: [3]),
-        layout: (q1: (0, 0), q2: (3, 0), q3: (1.5, -4)),
-        style: (state: (fill: gris), q1-q3: (curve: -1), q3-q2: (curve: -1), q3-q3: (anchor: top), q1-q2: (label: $epsilon$)),
-        //   layout: finite.layout.group.with(grouping: (("q1", "q2"), "q3"), spacing: 2, layout: finite.layout.linear.with(dir: right))
+        labels: (q1: $1$, q2: $2$, q3: $3$),
+        layout: (q1: (0, 0), q2: (4, 0), q3: (2, -4)),
+        style: (
+          state: (fill: gris, extrude: 0.75), 
+          transition: (angle: 0deg),
+          q1-q3: (curve: 0, ), 
+          q3-q2: (curve: 0, label:(dist: 0.40)), 
+          q3-q3: (anchor: right), 
+          
+          ),
+        
       ),
     )
   ]
