@@ -300,6 +300,162 @@
 #exercise[10 pts][
   Encuentra una ER que represente el lenguaje de todas las cadenas de 0's y 1's que no contienen la subcadena $110$
 ]
+ 
+#solution[
+  Una forma de hacerlo es construir el AFD que reconozca el lenguaje, después pasarlo al generalizado y por ultimo reducirlo como en
+  el @problem_4, procedamos de esa forma.
+  Sea $A$ el lenguaje de todas las cadenas de 0's y 1's que contienen la subcadena $110$.
+  El automata que reconoce $A$ es el siguiente
+  #align(center)[
+    #figure(finite.automaton(
+      (d0: (d0: $0$, d1: $1$), d1: (d0: $0$, d2: $1$), d2: (d3: $0$, d2: $1$), d3: (d3: $0, 1$)),
+      initial: "d0",
+      final: "d3",
+      labels: (d0: $q$, d1: $q_(1)$, d2: $q_(11)$, d3: $q_(110)$),
+      // layout: (q1: (0, 0), q2: (4, 0), q3: (2, -4)),
+      style: (
+        state: (fill: gris, extrude: 0.75),
+        transition: (angle: 0deg),
+        q1-q3: (curve: 0),
+        q3-q2: (curve: 0, label: (dist: 0.40)),
+        q3-q3: (anchor: right),
+      ),
+    ))
+  ]
+
+  Por lo cual el AFD que reconoce $A^complement$, el lenguaje que nos interesa, es el siguiente:
+  #align(center)[
+    #figure(finite.automaton(
+      (d0: (d0: $0$, d1: $1$), d1: (d0: $0$, d2: $1$), d2: (d3: $0$, d2: $1$), d3: (d3: $0, 1$)),
+      initial: "d0",
+      final: ("d0", "d1", "d2"),
+      labels: (d0: $q$, d1: $q_(1)$, d2: $q_(11)$, d3: $q_(110)$),
+      // layout: (q1: (0, 0), q2: (4, 0), q3: (2, -4)),
+      style: (
+        state: (fill: gris, extrude: 0.75),
+        transition: (angle: 0deg),
+        q1-q3: (curve: 0),
+        q3-q2: (curve: 0, label: (dist: 0.40)),
+        q3-q3: (anchor: right),
+      ),
+    ))
+  ]
+  Por ultimo contruaymos el AFNDG, lo primero es agregar nuevos estados inicial y final, asi obtenemos el siguiente AFNDG
+  #align(center)[
+    #figure(finite.automaton(
+      (
+        g0: (d0: $eps$),
+        d0: (d0: $0$, d1: $1$, g1: $eps$),
+        d1: (d0: $0$, d2: $1$, g1: $eps$),
+        d2: (d3: $0$, d2: $1$, g1: $eps$),
+        d3: (d3: $0 union 1$),
+      ),
+      initial: "g0",
+      final: ("g1",),
+      labels: (g0: $S$, g1: $A$, d0: $q$, d1: $q_(1)$, d2: $q_(11)$, d3: $q_(110)$),
+      layout: (g0: (0, 0), g1: (5, -3), rest: (rel: (2.5, 0))),
+      style: (
+        state: (fill: gris, extrude: 0.75),
+        transition: (angle: 0deg),
+        d0-g1: (curve: -1),
+        d1-g1: (curve: 0),
+        d2-g1: (anchor: right),
+      ),
+    ))
+  ]
+  Ahora reduzcamoslo, primero quitemos el estado $q_(110)$, en este caso la única transición
+  es la vacía ($emptyset$) hacia el estado aceptor $A$, por lo cual simplemente podemos quitarlo para obtener
+  #align(center)[
+    #figure(finite.automaton(
+      (
+        g0: (d0: $eps$),
+        d0: (d0: $0$, d1: $1$, g1: $eps$),
+        d1: (d0: $0$, d2: $1$, g1: $eps$),
+        d2: ( d2: $1$, g1: $eps$),
+   
+      ),
+      initial: "g0",
+      final: "g1",
+      labels: (g0: $S$, g1: $A$, d0: $q$, d1: $q_(1)$, d2: $q_(11)$, ),
+      layout: (g0: (0, 0), g1: (5, -3), rest: (rel: (2.5, 0))),
+      style: (
+        state: (fill: gris, extrude: 0.75),
+        transition: (angle: 0deg),
+        d0-g1: (curve: -1),
+        d1-g1: (curve: 0),
+        d2-g1: (anchor: right),
+      ),
+    ))
+  ]
+  Ahora quitemos el estado $q_(11)$ para obtener
+  #align(center)[
+    #figure(finite.automaton(
+      (
+        g0: (d0: $eps$),
+        d0: (d0: $0$, d1: $1$, g1: $eps$),
+        d1: (d0: $0$, g1: $eps union 1 1^* eps$),
+        
+   
+      ),
+      initial: "g0",
+      final: "g1",
+      labels: (g0: $S$, g1: $A$, d0: $q$, d1: $q_(1)$, d2: $q_(11)$, ),
+      layout: (g0: (0, 0), g1: (5, -3), rest: (rel: (2.5, 0))),
+      style: (
+        state: (fill: gris, extrude: 0.75),
+        transition: (angle: 0deg),
+        d0-g1: (curve: -1),
+        d1-g1: (curve: 0, label:(dist: -1)),
+
+      ),
+    ))
+  ]
+  Luego, recordemos que $1 1^* eps = 1 1^*$ y ahora quitemos el estado $q_(1)$ y obtenemos 
+  #align(center)[
+    #figure(finite.automaton(
+      (
+        g0: (d0: $eps$),
+        d0: (d0: $0 union 10$, g1: $eps union 1(eps union 1 1^*)$),
+   
+      ),
+      initial: "g0",
+      final: "g1",
+      labels: (g0: $S$, g1: $A$, d0: $q$, d1: $q_(1)$, d2: $q_(11)$, ),
+      layout: (g0: (0, 0), g1: (7, 0), rest: (rel: (2.5, 0))),
+      style: (
+        state: (fill: gris, extrude: 0.75),
+        transition: (angle: 0deg),
+        d0-g1: (curve: 1),
+        d1-g1: (curve: 0, label:(dist: -1)),
+
+      ),
+    ))
+  ]
+
+  Finalmente quitamos el estado $q$ y obtenemos 
+  #align(center)[
+    #figure(finite.automaton(
+      (
+        g0: (d0: $eps(0 union 10)^* (eps union 1(eps union 1 1^*))$),        
+   
+      ),
+      initial: "g0",
+      final: "g1",
+      labels: (g0: $S$, g1: $A$, d0: $q$, d1: $q_(1)$, d2: $q_(11)$, ),
+      layout: (g0: (0, 0), g1: (7, 0), rest: (rel: (2.5, 0))),
+      style: (
+        state: (fill: gris, extrude: 0.75),
+        transition: (angle: 0deg),
+        d0-g1: (curve: 1),
+        d1-g1: (curve: 0, label:(dist: -1)),
+
+      ),
+    ))
+  ]
+  Por lo cual la ER que reconoce $A^complement$ es: $(0 union 10)^* (eps union 1(eps union 1 1^*))$.
+  Notemos que para reconocer $A^complement$ a lo mas debe haber un $1$ entre ceros, lo cual hace la parte $(0 union 10)^*$, 
+  luego, puede terminar en $0$ o una cantidad no negativa de unos lo cual hace la parte $eps union 1(eps union 1 1^*)$.
+]
 
 #exercise[10 pts][
   Convierte el siguiente AFND en AFNDGs y luego reducelo quitando un estado a la vez hasta obtener una ER.
