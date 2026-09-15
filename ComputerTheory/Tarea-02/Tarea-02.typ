@@ -9,7 +9,7 @@
   title: [Tarea 2],
   student: [Antonio Barragán Romero],
   student_email: "antonio.barragan@cimat.mx",
-  date: datetime(day: 27, month: 8, year: 2025),
+  date: datetime(day: 8, month: 9, year: 2025),
 )
 #show: apply_definitions
 // #let eps =  $epsilon$
@@ -66,7 +66,7 @@
   + Para la ER $a(a b b)^* union b$ tenemos lo siguiente:
     #format_step()[$a b b$][
       #scale(automaton(
-        ((q0: (q1: "a"), q1: (q2: 0), q2: (q3: "b"), q3: (q4: 0), q4: (q5: "b"))),
+        ((q0: (q1: $a$), q1: (q2: 0), q2: (q3: $b$), q3: (q4: 0), q4: (q5: $b$))),
         initial: "q0",
         final: "q5",
         labels: (q1-q2: $epsilon$, q3-q4: $epsilon$),
@@ -80,7 +80,7 @@
     ]
     #format_step()[$(a b b)^*$][
       #scale(automaton(
-        (q6: (q0: $eps$), q0: (q1: "a"), q1: (q2: 0), q2: (q3: "b"), q3: (q4: 0), q4: (q5: "b"), q5: (q0: $eps$)),
+        (q6: (q0: $eps$), q0: (q1: $a$), q1: (q2: 0), q2: (q3: $b$), q3: (q4: 0), q4: (q5: $b$), q5: (q0: $eps$)),
         initial: "q6",
         final: ("q6", "q5",),
         labels: (q1-q2: $epsilon$, q3-q4: $epsilon$),
@@ -96,14 +96,14 @@
     #format_step()[$a(a b b)^*$][
       #scale(automaton(
         (
-          q8: (q7: "a"),
+          q8: (q7: $a$),
           q7: (q6: $eps$),
           q6: (q0: $eps$),
-          q0: (q1: "a"),
+          q0: (q1: $a$),
           q1: (q2: 0),
-          q2: (q3: "b"),
+          q2: (q3: $b$),
           q3: (q4: 0),
-          q4: (q5: "b"),
+          q4: (q5: $b$),
           q5: (q0: $eps$),
         ),
         initial: "q8",
@@ -147,153 +147,153 @@
         ),
       ))
     ]
-  + Para le ER $a^+ union (a b)^+$ recordemos que $R^+ = R R^*$ y obtenemos que:
-    #format_step()[$ a$][
-      #scale(automaton((q0: (q1: "a"), q1: none)))
-    ]
-    #format_step()[$a^*$][
-      #scale(automaton((p0: (p1: $eps$), p1: (p2: "a"), p2: (p1: $eps$)), final: ("p0", "p2"), style: (
-        state: (radius: 0.2, fill: gris, stroke: black + 0.5pt, extrude: 0.66),
-        // q5: (radius: 0.3),
-        transition: (curve: 0.01, stroke: black + 0.5pt),
-        p2-p1: (curve: .5),
-      )))
-    ]
-    #format_step()[$a^+ := a a^*$][
-      #scale(automaton(
-        (q0: (q1: "a"), q1: (p0: $eps$), p0: (p1: $eps$), p1: (p2: "a"), p2: (p1: $eps$)),
-        final: ("p0", "p2"),
-        style: (
+    + Para le ER $a^+ union (a b)^+$ recordemos que $R^+ = R R^*$ y obtenemos que:
+      #format_step()[$ a$][
+        #scale(automaton((q0: (q1: $a$), q1: none)))
+      ]
+      #format_step()[$a^*$][
+        #scale(automaton((p0: (p1: $eps$), p1: (p2: $a$), p2: (p1: $eps$)), final: ("p0", "p2"), style: (
           state: (radius: 0.2, fill: gris, stroke: black + 0.5pt, extrude: 0.66),
           // q5: (radius: 0.3),
           transition: (curve: 0.01, stroke: black + 0.5pt),
           p2-p1: (curve: .5),
-        ),
-      ))
-    ]
-    #format_step()[$(a b)^*$][
-      #scale(automaton(
-        (r0: (r1: $eps$), r1: (r2: $a$), r2: (r3: $eps$), r3: (r4: $b$), r4: (r1: $eps$)),
-        final: ("r0", "r4"),
-        style: (
-          state: (radius: 0.2, fill: gris, stroke: black + 0.5pt, extrude: 0.66),
-          // q5: (radius: 0.3),
-          transition: (curve: 0.01, stroke: black + 0.5pt),
-          r4-r1: (curve: .8),
-        ),
-      ))
-    ]
-    #format_step()[$a^+ union (a b)^*$][
-      #scale(automaton(
-        (
-          s: (q0: $eps$, r0: $eps$),
-          q0: (q1: $a$),
-          q1: (p0: $eps$),
-          p0: (p1: $eps$),
-          p1: (p2: $a$),
-          p2: (p1: $eps$),
-          r0: (r1: $eps$),
-          r1: (r2: $a$),
-          r2: (r3: $eps$),
-          r3: (r4: $b$),
-          r4: (r1: $eps$),
-        ),
-        layout: (s: (0, 0), q0: (1, 1), r0: (1, -1), rest: (rel: (1.3, 0))),
-        final: ("p0", "p2", "r0", "r4"),
-        style: (
-          state: (radius: 0.2, fill: gris, stroke: black + 0.5pt, extrude: 0.66),
-          // q5: (radius: 0.3),
-          transition: (curve: 0.01, stroke: black + 0.5pt, angle: 0deg),
-          r4-r1: (curve: .8),
-          p2-p1: (curve: .5),
-          s-r0: (label: (dist: -0.33), angle: (0deg)),
-        ),
-      ))
-    ]
-  + Para la ER $(a union b^+)a^+b^+$ usemos algunos autómatas construidos en el inciso anterior para obtener:
-    #format_step()[$ a$][
-      #scale(automaton((q0: (q1: $a$), q1: none)))
-    ]
-    #format_step()[$b^+ := b b^*$][
-      #scale(automaton(
-        (b0: (q1: $b$), q1: (p0: $eps$), p0: (p1: $eps$), p1: (p2: $b$), p2: (p1: $eps$)),
-        final: ("p0", "p2"),
-        style: (
-          state: (radius: 0.2, fill: gris, stroke: black + 0.5pt, extrude: 0.66),
-          // q5: (radius: 0.3),
-          transition: (curve: 0.01, stroke: black + 0.5pt),
-          p2-p1: (curve: .5),
-        ),
-      ))
-    ]
-    #format_step()[$a union b^+$][
-      #scale(automaton((
-        u0: (q0: ($eps$), r0: $eps$),
-        q0: (q1: $a$),
-        q1: none,
-        r0: (r1: $b$),
-        r1: (p0: $eps$),
-        p0: (p1: $eps$),
-        p1: (p2: $b$),
-        p2: (p1: $eps$),
-      ), layout: (u0: (0, 0), q0: (1, 1), r0: (1, -1), rest: (rel: (1.2, 0))), final: ("q1", "p0", "p2",), style: (
-        state: (radius: 0.2, fill: gris, stroke: black + 0.5pt, extrude: 0.66),
-        // q5: (radius: 0.3),
-        transition: (curve: 0.01, stroke: black + 0.5pt, angle: 0deg),
-        p2-p1: (curve: .5),
-        u0-r0: (label: (dist: -0.33)),
-      )))
-    ]
-    #format_step()[$a^+ := a a^*$][
-      #scale(automaton(
-        (a0: (a1: $a$), a1: (a2: $eps$), a2: (a3: $eps$), a3: (a4: $a$), a4: (a3: $eps$)),
-        final: ("a2", "a4"),
-        style: (
-          state: (radius: 0.2, fill: gris, stroke: black + 0.5pt, extrude: 0.66),
-          // q5: (radius: 0.3),
-          transition: (curve: 0.01, stroke: black + 0.5pt),
-          a4-a3: (curve: 0.5),
-        ),
-      ))
-    ]
-    #format_step()[$(a union b^+)a^+b^+$][
-      #scale(automaton(
-        (
+        )))
+      ]
+      #format_step()[$a^+ := a a^*$][
+        #scale(automaton(
+          (q0: (q1: $a$), q1: (p0: $eps$), p0: (p1: $eps$), p1: (p2: $a$), p2: (p1: $eps$)),
+          final: ("p0", "p2"),
+          style: (
+            state: (radius: 0.2, fill: gris, stroke: black + 0.5pt, extrude: 0.66),
+            // q5: (radius: 0.3),
+            transition: (curve: 0.01, stroke: black + 0.5pt),
+            p2-p1: (curve: .5),
+          ),
+        ))
+      ]
+      #format_step()[$(a b)^*$][
+        #scale(automaton(
+          (r0: (r1: $eps$), r1: (r2: $a$), r2: (r3: $eps$), r3: (r4: $b$), r4: (r1: $eps$)),
+          final: ("r0", "r4"),
+          style: (
+            state: (radius: 0.2, fill: gris, stroke: black + 0.5pt, extrude: 0.66),
+            // q5: (radius: 0.3),
+            transition: (curve: 0.01, stroke: black + 0.5pt),
+            r4-r1: (curve: .8),
+          ),
+        ))
+      ]
+      #format_step()[$a^+ union (a b)^*$][
+        #scale(automaton(
+          (
+            s: (q0: $eps$, r0: $eps$),
+            q0: (q1: $a$),
+            q1: (p0: $eps$),
+            p0: (p1: $eps$),
+            p1: (p2: $a$),
+            p2: (p1: $eps$),
+            r0: (r1: $eps$),
+            r1: (r2: $a$),
+            r2: (r3: $eps$),
+            r3: (r4: $b$),
+            r4: (r1: $eps$),
+          ),
+          layout: (s: (0, 0), q0: (1, 1), r0: (1, -1), rest: (rel: (1.3, 0))),
+          final: ("p0", "p2", "r0", "r4"),
+          style: (
+            state: (radius: 0.2, fill: gris, stroke: black + 0.5pt, extrude: 0.66),
+            // q5: (radius: 0.3),
+            transition: (curve: 0.01, stroke: black + 0.5pt, angle: 0deg),
+            r4-r1: (curve: .8),
+            p2-p1: (curve: .5),
+            s-r0: (label: (dist: -0.33), angle: (0deg)),
+          ),
+        ))
+      ]
+    + Para la ER $(a union b^+)a^+b^+$ usemos algunos autómatas construidos en el inciso anterior para obtener:
+      #format_step()[$ a$][
+        #scale(automaton((q0: (q1: $a$), q1: none)))
+      ]
+      #format_step()[$b^+ := b b^*$][
+        #scale(automaton(
+          (b0: (b1: $b$), b1: (b2: $eps$), b2: (b3: $eps$), b3: (b4: $b$), b4: (b3: $eps$)),
+          final: ("b2", "b4"),
+          style: (
+            state: (radius: 0.2, fill: gris, stroke: black + 0.5pt, extrude: 0.66),
+            // q5: (radius: 0.3),
+            transition: (curve: 0.01, stroke: black + 0.5pt),
+            b4-b3: (curve: .45),
+          ),
+        ))
+      ]
+      #format_step()[$a union b^+$][
+        #scale(automaton((
           u0: (q0: ($eps$), r0: $eps$),
           q0: (q1: $a$),
-          q1: (a0: $eps$),
+          q1: none,
           r0: (r1: $b$),
           r1: (p0: $eps$),
           p0: (p1: $eps$),
           p1: (p2: $b$),
-          p2: (p1: $eps$, a0: $eps$),
-          a0: (a1: $a$),
-          a1: (a2: $eps$),
-          a2: (a3: $eps$, b0: ($eps$)),
-          a3: (a4: $a$),
-          a4: (a3: $eps$, b0: ($eps$)),
-          b0: (b1: $b$),
-          b1: (b2: $eps$),
-          b2: (b3: $eps$),
-          b3: (b4: $b$),
-          b4: (b3: $eps$),
-        ),
-        layout: (u0: (0, 0), q0: (1, -1), r0: (1, 1), a0: (4, -1), b0: (6.5, 1), rest: (rel: (1.2, 0))),
-        final: ("b2", "b4"),
-        style: (
+          p2: (p1: $eps$),
+        ), layout: (u0: (0, 0), q0: (1, 1), r0: (1, -1), rest: (rel: (1.2, 0))), final: ("q1", "p0", "p2",), style: (
           state: (radius: 0.2, fill: gris, stroke: black + 0.5pt, extrude: 0.66),
           // q5: (radius: 0.3),
           transition: (curve: 0.01, stroke: black + 0.5pt, angle: 0deg),
-          p2-p1: (curve: 0.5, label: (dist: 0.2)),
-          a4-a3: (curve: 0.5),
-          b4-b3: (curve: 0.5),
-          p2-a0: (curve: 0.5, label: (dist: 0.2, pos: 0.4)),
-          a0-a1: (label: (dist: -0.32)),
-          a4-b0: (curve: -0.5),
-          u0-q0: (label: (dist: -0.33)),
-        ),
-      ))
-    ]
+          p2-p1: (curve: .5),
+          u0-r0: (label: (dist: -0.33)),
+        )))
+      ]
+      #format_step()[$a^+ := a a^*$][
+        #scale(automaton(
+          (a0: (a1: $a$), a1: (a2: $eps$), a2: (a3: $eps$), a3: (a4: $a$), a4: (a3: $eps$)),
+          final: ("a2", "a4"),
+          style: (
+            state: (radius: 0.2, fill: gris, stroke: black + 0.5pt, extrude: 0.66),
+            // q5: (radius: 0.3),
+            transition: (curve: 0.01, stroke: black + 0.5pt),
+            a4-a3: (curve: 0.5),
+          ),
+        ))
+      ]
+      #format_step()[$(a union b^+)a^+b^+$][
+        #scale(automaton(
+          (
+            u0: (q0: ($eps$), r0: $eps$),
+            q0: (q1: $a$),
+            q1: (a0: $eps$),
+            r0: (r1: $b$),
+            r1: (p0: $eps$),
+            p0: (p1: $eps$),
+            p1: (p2: $b$),
+            p2: (p1: $eps$, a0: $eps$),
+            a0: (a1: $a$),
+            a1: (a2: $eps$),
+            a2: (a3: $eps$, b0: ($eps$)),
+            a3: (a4: $a$),
+            a4: (a3: $eps$, b0: ($eps$)),
+            b0: (b1: $b$),
+            b1: (b2: $eps$),
+            b2: (b3: $eps$),
+            b3: (b4: $b$),
+            b4: (b3: $eps$),
+          ),
+          layout: (u0: (0, 0), q0: (1, -1), r0: (1, 1), a0: (4, -1), b0: (6.5, 1), rest: (rel: (1.2, 0))),
+          final: ("b2", "b4"),
+          style: (
+            state: (radius: 0.2, fill: gris, stroke: black + 0.5pt, extrude: 0.66),
+            // q5: (radius: 0.3),
+            transition: (curve: 0.01, stroke: black + 0.5pt, angle: 0deg),
+            p2-p1: (curve: 0.5, label: (dist: 0.2)),
+            a4-a3: (curve: 0.5),
+            b4-b3: (curve: 0.5),
+            p2-a0: (curve: 0.5, label: (dist: 0.2, pos: 0.4)),
+            a0-a1: (label: (dist: -0.32)),
+            a4-b0: (curve: -0.5),
+            u0-q0: (label: (dist: -0.33)),
+          ),
+        ))
+      ]
 
 ]
 
@@ -371,12 +371,11 @@
         g0: (d0: $eps$),
         d0: (d0: $0$, d1: $1$, g1: $eps$),
         d1: (d0: $0$, d2: $1$, g1: $eps$),
-        d2: ( d2: $1$, g1: $eps$),
-   
+        d2: (d2: $1$, g1: $eps$),
       ),
       initial: "g0",
       final: "g1",
-      labels: (g0: $S$, g1: $A$, d0: $q$, d1: $q_(1)$, d2: $q_(11)$, ),
+      labels: (g0: $S$, g1: $A$, d0: $q$, d1: $q_(1)$, d2: $q_(11)$),
       layout: (g0: (0, 0), g1: (5, -3), rest: (rel: (2.5, 0))),
       style: (
         state: (fill: gris, extrude: 0.75),
@@ -390,72 +389,57 @@
   Ahora quitemos el estado $q_(11)$ para obtener
   #align(center)[
     #figure(finite.automaton(
-      (
-        g0: (d0: $eps$),
-        d0: (d0: $0$, d1: $1$, g1: $eps$),
-        d1: (d0: $0$, g1: $eps union 1 1^* eps$),
-        
-   
-      ),
+      (g0: (d0: $eps$), d0: (d0: $0$, d1: $1$, g1: $eps$), d1: (d0: $0$, g1: $eps union 1 1^* eps$)),
       initial: "g0",
       final: "g1",
-      labels: (g0: $S$, g1: $A$, d0: $q$, d1: $q_(1)$, d2: $q_(11)$, ),
+      labels: (g0: $S$, g1: $A$, d0: $q$, d1: $q_(1)$, d2: $q_(11)$),
       layout: (g0: (0, 0), g1: (5, -3), rest: (rel: (2.5, 0))),
       style: (
         state: (fill: gris, extrude: 0.75),
         transition: (angle: 0deg),
         d0-g1: (curve: -1),
-        d1-g1: (curve: 0, label:(dist: -1)),
-
+        d1-g1: (curve: 0, label: (dist: -1)),
       ),
     ))
   ]
-  Luego, recordemos que $1 1^* eps = 1 1^*$ y ahora quitemos el estado $q_(1)$ y obtenemos 
+  Luego, recordemos que $1 1^* eps = 1 1^*$ y ahora quitemos el estado $q_(1)$ y obtenemos
   #align(center)[
     #figure(finite.automaton(
-      (
-        g0: (d0: $eps$),
-        d0: (d0: $0 union 10$, g1: $eps union 1(eps union 1 1^*)$),
-   
-      ),
+      (g0: (d0: $eps$), d0: (d0: $0 union 10$, g1: $eps union 1(eps union 1 1^*)$)),
       initial: "g0",
       final: "g1",
-      labels: (g0: $S$, g1: $A$, d0: $q$, d1: $q_(1)$, d2: $q_(11)$, ),
+      labels: (g0: $S$, g1: $A$, d0: $q$, d1: $q_(1)$, d2: $q_(11)$),
       layout: (g0: (0, 0), g1: (7, 0), rest: (rel: (2.5, 0))),
       style: (
         state: (fill: gris, extrude: 0.75),
         transition: (angle: 0deg),
         d0-g1: (curve: 1),
-        d1-g1: (curve: 0, label:(dist: -1)),
-
+        d1-g1: (curve: 0, label: (dist: -1)),
       ),
     ))
   ]
 
-  Finalmente quitamos el estado $q$ y obtenemos 
+  Finalmente quitamos el estado $q$ y obtenemos
   #align(center)[
     #figure(finite.automaton(
-      (
-        g0: (d0: $eps(0 union 10)^* (eps union 1(eps union 1 1^*))$),        
-   
-      ),
+      (g0: (d0: $eps(0 union 10)^* (eps union 1(eps union 1 1^*))$)),
       initial: "g0",
       final: "g1",
-      labels: (g0: $S$, g1: $A$, d0: $q$, d1: $q_(1)$, d2: $q_(11)$, ),
+      labels: (g0: $S$, g1: $A$, d0: $q$, d1: $q_(1)$, d2: $q_(11)$),
       layout: (g0: (0, 0), g1: (7, 0), rest: (rel: (2.5, 0))),
       style: (
         state: (fill: gris, extrude: 0.75),
         transition: (angle: 0deg),
         d0-g1: (curve: 1),
-        d1-g1: (curve: 0, label:(dist: -1)),
-
+        d1-g1: (curve: 0, label: (dist: -1)),
       ),
     ))
   ]
   Por lo cual la ER que reconoce $A^complement$ es: $(0 union 10)^* (eps union 1(eps union 1 1^*))$.
-  Notemos que para reconocer $A^complement$ a lo mas debe haber un $1$ entre ceros, lo cual hace la parte $(0 union 10)^*$, 
+  Notemos que para reconocer $A^complement$ a lo mas debe haber un $1$ entre ceros, lo cual hace la parte $(0 union 10)^*$,
   luego, puede terminar en $0$ o una cantidad no negativa de unos lo cual hace la parte $eps union 1(eps union 1 1^*)$.
 ]
+
 
 #exercise[10 pts][
   Convierte el siguiente AFND en un AFNDG y luego reducelo quitando un estado a la vez hasta obtener una ER.
@@ -563,7 +547,7 @@
   Podemos notar que $B$ es la concatenación de los siguientes lenguajes ${a^i b^i: i>=0}$ y ${c^k: k>=0}$,
   y cada uno es un LLC, las reglas de sustitución que los generan son las siguientes: ${S -> a S b| eps}$ y ${S -> c C|eps}$, respectivamente.
   Por lo cual, tomando inspiración de la _concatenación_, tenemos que la GLC para $B$ esta dada por $B_G=({S_B, A_B, C_B}, {a, b, c}, R_B, S_B)$,
-  donde $R_B$ es 
+  donde $R_B$ es
   $
     S_B &-> A_B C_B \
     A_B &-> a S b| eps \
@@ -634,7 +618,7 @@
   $
   por lo cual $S deriv w$, y asi obtenemos que $w in L(G)$ y por tanto $L1^* subset L(G)$. De manera similar, si $w in L(G)$ entonces $S deriv w$ y dado que el orden de sustitución no cambia la cadena final,
   podemos suponer que _derivamos por la izquierda_, es decir, en cada paso la variable mas a la izquierda es remplazada.
-  Luego, dadas las reglas de sustitución que contienen a $S$ es claro que en la derivación de $w$ en algún momento se tuvo que pasar por 
+  Luego, dadas las reglas de sustitución que contienen a $S$ es claro que en la derivación de $w$ en algún momento se tuvo que pasar por
   $
     S => S S1 => S S1 S1 => dots deriv S S1^k => S1^k deriv w,
   $
@@ -651,10 +635,10 @@
   #let B = $bold(B)$
   Procedamos por contrapositiva y veamos que $#B$ no cumple el _lema del bombeo_ para LLCs.
   Sea $n in NN$ y consideremos la siguiente cadena $s = 0^n 1^n 1^n 0^n$ es claro que $s in #B$. Notemos que dada cualquier descomposición de $s = u v x y z$ con $abs(v y) >0$ y $abs(v x y) <= p$, cae un uno de los siguientes casos:
-  + $v x y$  sucede en alguna de las dos mitades mitades ($0^n 1^n$ o $1^n 0^n$). En cualquier caso como la otra mitad no se ve afectada al _bombear_, tendríamos que $u v^i x y^i z$ dejaría de ser palindroma (por ejemplo si $v$ o $y$ bombean 0's) 
+  + $v x y$ sucede en alguna de las dos mitades mitades ($0^n 1^n$ o $1^n 0^n$). En cualquier caso como la otra mitad no se ve afectada al _bombear_, tendríamos que $u v^i x y^i z$ dejaría de ser palindroma (por ejemplo si $v$ o $y$ bombean 0's)
     o dejaría de tener la misma cantidad de 0's que de 1's (por ejemplo si $v$, $y$ son puros 1's) y en consecuencia no puede estar en #B.
-  + $v x y$  sucede en el medio $1^n 1^n$. En este caso al no _bombear_ nada tenemos que $u x z $ es de  la forma $0^n 1^i 1^j 0^n$, con $i + j < 2n$, es decir, no contienen la misma contidad de 0's que de 1's y por tanto no puede estar en #B.
-  // Los anteriores son todos los casos pues $abs(v x y) <= p$. 
+  + $v x y$ sucede en el medio $1^n 1^n$. En este caso al no _bombear_ nada tenemos que $u x z $ es de la forma $0^n 1^i 1^j 0^n$, con $i + j < 2n$, es decir, no contienen la misma contidad de 0's que de 1's y por tanto no puede estar en #B.
+  // Los anteriores son todos los casos pues $abs(v x y) <= p$.
   De lo anterior tenemos que #B no satisface el _lema del bombeo_ para LLCs por lo tanto no es un LLC.
 ]
 
