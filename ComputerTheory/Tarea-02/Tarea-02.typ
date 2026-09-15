@@ -486,9 +486,43 @@
   $
     A = {a^i b^j c^k: "donde" i=j " o " j=k "con" i, j, k >= 0}.
   $
-]#solution[
+]
+#solution[
+  Primero notemos que $A = B union C$, donde
+  $
+    B := {a^i b^i c^k: i, k>=0}, quad C := {a^i b^k c^k:i, k>=0},
+  $
+  por lo cual daremos GLCs para $B$ y $C$ y a partir de ahi construiremos la de $A$ usando
+  lo probado en el @problem_6, sobre la _union_.
+  Podemos notar que $B$ es la concatenación de los siguientes lenguajes ${a^i b^i: i>=0}$ y ${c^k: k>=0}$,
+  y cada uno es un LLC, las reglas de sustitución que los generan son las siguientes: ${S -> a S b| eps}$ y ${S -> c C|eps}$, respectivamente.
+  Por lo cual, tomando inspiración de la _concatenación_, tenemos que la GLC para $B$ esta dada por $B_G=({S_B, A_B, C_B}, {a, b, c}, R_B, S_B)$,
+  donde $R_B$ es 
+  $
+    S_B &-> A_B C_B \
+    A_B &-> a S b| eps \
+    C_B &-> c C_B | eps.
+  $
+  De manera similar podemos ver que la GLC que genera $C$ esta dada por $C_G =({S_C, A_C, B_C}, {a, b, c}, R_C, S_C)$, donde $R_C$ es
+  $
+    S_C &-> A_C C_C \
+    A_C &-> a A_C | eps \
+    B_C &-> b B_C c | eps.
+  $
+  Entonces, haciendo la union de $B$ y $C$, obtenemos que la GLC que genera $A$ es $A_G = ({S, S_B, A_B, C_B, S_C, A_C, B_C}, {a, b, c}, R, S)$, donde $R$ esta dada por las siguientes reglas de sustitución:
+  $
+    S   &-> S_B | S_C \
+    S_B &-> A_B C_B \
+    A_B &-> a S b| eps \
+    C_B &-> c C_B | eps \
+    S_C &-> A_C C_C \
+    A_C &-> a A_C | eps \
+    B_C &-> b B_C c | eps.
+  $
+  Por lo anterior y el @problem_6, tenemos que $A_G$ genera a $A$, como queremos.
+]
 
-]#exercise[20 pts][
+#exercise[20 pts][
   Muestre que los LLCs son cerrados bajo operaciones regulares: union, concatenación y estrella de Kleen.
 ]<problem_6>
 
