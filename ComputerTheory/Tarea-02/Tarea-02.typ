@@ -580,4 +580,16 @@
 #exercise[20 pts][
   Sea *B* el lenguaje de todas las cadenas palindromicas en ${0, 1}$ que contienen la misma cantidad de 0's que de 1's.
   Muestre que *B* no es libre de contexto.
-]#bibliography("../../biblio.yml")
+]
+#proof[
+  #let B = $bold(B)$
+  Procedamos por contrapositiva y veamos que $#B$ no cumple el _lema del bombeo_ para LLCs.
+  Sea $n in NN$ y consideremos la siguiente cadena $s = 0^n 1^n 1^n 0^n$ es claro que $s in #B$. Notemos que dada cualquier descomposición de $s = u v x y z$ con $abs(v y) >0$ y $abs(v x y) <= p$, cae un uno de los siguientes casos:
+  + $v x y$  sucede en alguna de las dos mitades mitades ($0^n 1^n$ o $1^n 0^n$). En cualquier caso como la otra mitad no se ve afectada al _bombear_, tendríamos que $u v^i x y^i z$ dejaría de ser palindroma (por ejemplo si $v$ o $y$ bombean 0's) 
+    o dejaría de tener la misma cantidad de 0's que de 1's (por ejemplo si $v$, $y$ son puros 1's) y en consecuencia no puede estar en #B.
+  + $v x y$  sucede en el medio $1^n 1^n$. En este caso al no _bombear_ nada tenemos que $u x z $ es de  la forma $0^n 1^i 1^j 0^n$, con $i + j < 2n$, es decir, no contienen la misma contidad de 0's que de 1's y por tanto no puede estar en #B.
+  // Los anteriores son todos los casos pues $abs(v x y) <= p$. 
+  De lo anterior tenemos que #B no satisface el _lema del bombeo_ para LLCs por lo tanto no es un LLC.
+]
+
+#bibliography("../../biblio.yml")
