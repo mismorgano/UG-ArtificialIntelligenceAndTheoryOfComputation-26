@@ -7,8 +7,8 @@
   show "AFDs": [autómatas finitos deterministas]
   show "AFND": [automata finito no determinista]
   show "AFNDs": [autómatas finitos no deterministas]
-  show "AFNDG": [and generalizado]
-  show "AFNDGs": [ands generalizados]
+  show "AFNDG": [AFND generalizado]
+  show "AFNDGs": [AFNDs generalizados]
   
   show "ssi": [si y solo si]
   show "tq": [tal que]
