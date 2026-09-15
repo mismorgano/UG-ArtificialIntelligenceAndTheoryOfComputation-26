@@ -458,30 +458,96 @@
 ]
 
 #exercise[10 pts][
-  Convierte el siguiente AFND en AFNDGs y luego reducelo quitando un estado a la vez hasta obtener una ER.
-  #align(
-    center,
-  )[
-    #figure(
-      finite.automaton(
-        (q1: (q2: $eps$, q3: $a$), q2: (q1: $a$), q3: (q2: $a, b$, q3: "b")),
-        initial: "q1",
-        final: "q2",
-        labels: (q1: $1$, q2: $2$, q3: $3$),
-        layout: (q1: (0, 0), q2: (4, 0), q3: (2, -4)),
-        style: (
-          state: (fill: gris, extrude: 0.75), 
-          transition: (angle: 0deg),
-          q1-q3: (curve: 0, ), 
-          q3-q2: (curve: 0, label:(dist: 0.40)), 
-          q3-q3: (anchor: right), 
-          
-          ),
-        
+  Convierte el siguiente AFND en un AFNDG y luego reducelo quitando un estado a la vez hasta obtener una ER.
+  #align(center)[
+    #figure(finite.automaton(
+      (q1: (q2: $eps$, q3: $a$), q2: (q1: $a$), q3: (q2: $a, b$, q3: "b")),
+      initial: "q1",
+      final: "q2",
+      labels: (q1: $1$, q2: $2$, q3: $3$),
+      layout: (q1: (0, 0), q2: (4, 0), q3: (2, -4)),
+      style: (
+        state: (fill: gris, extrude: 0.75),
+        transition: (angle: 0deg),
+        q1-q3: (curve: 0),
+        q3-q2: (curve: 0, label: (dist: 0.40)),
+        q3-q3: (anchor: right),
       ),
-    )
+    ))
   ]
-]#exercise[20 pts][
+]<problem_4>
+#solution[
+  Siguiendo con el procedimiento de @Sipser_2013 para convertir un AFND en un AFNDG, primero agregamos un nuevo estado inicial y un estado final.
+  #figure(finite.automaton(
+    (q0: (q1: $eps$), q1: (q2: $eps$, q3: $a$), q2: (q1: $a$, q4: $eps$), q3: (q2: $a, b$, q3: "b")),
+    initial: "q0",
+    final: "q4",
+    labels: (q0: [#text(8pt)[START]], q1: $1$, q2: $2$, q3: $3$, q4: [#text(8pt)[END]]),
+    layout: (q0: (-3, 0), q1: (0, 0), q2: (4, 0), q3: (2, -4), q4: (7, 0)),
+    style: (
+      state: (fill: gris, extrude: 0.75),
+      transition: (angle: 0deg),
+      q1-q3: (curve: 0),
+      q3-q2: (curve: 0, label: (dist: 0.40)),
+      q3-q3: (anchor: right),
+    ),
+  ))
+  Ahora quitemos el estado numero 3 para obtener:
+  #figure(finite.automaton(
+    (q0: (q1: $eps$), q1: (q2: $eps union a b^*(a union b)$), q2: (q1: $a$, q4: $eps$)),
+    initial: "q0",
+    final: "q4",
+    labels: (q0: [#text(8pt)[START]], q1: $1$, q2: $2$, q3: $3$, q4: [#text(8pt)[END]]),
+    layout: (q0: (-3, 0), q1: (0, 0), q2: (4, 0), q3: (2, -4), q4: (7, 0)),
+    style: (
+      state: (fill: gris, extrude: 0.75),
+      transition: (angle: 0deg),
+      q1-q3: (curve: 0),
+      q3-q2: (curve: 0, label: (dist: 0.40)),
+      q3-q3: (anchor: right),
+    ),
+  ))
+  Ahora quitemos el estado numero 2 y obtenemos
+  #figure(finite.automaton(
+    (q0: (q1: $eps$), q1: (q1: $(eps union a b^*(a union b)a)^*$, q4: $eps union a b^*(a union b)eps$)),
+    initial: "q0",
+    final: "q4",
+    labels: (q0: [#text(8pt)[START]], q1: $1$, q2: $2$, q3: $3$, q4: [#text(8pt)[END]]),
+    layout: (q0: (-4, 0), q1: (0, 0), q4: (6, 0)),
+    style: (
+      state: (fill: gris, extrude: 0.75),
+      transition: (angle: 0deg),
+      q1-q3: (curve: 0),
+      q3-q2: (curve: 0, label: (dist: 0.40)),
+      q3-q3: (anchor: right),
+    ),
+  ))
+  Por ultimo quitemos el estado 1 para obtener la ER final
+  #figure(finite.automaton(
+    (q0: (q4: $eps(eps union a b^*(a union b)a)^*(eps union a b^*(a union b)eps)$)),
+    initial: "q0",
+    final: "q4",
+    labels: (q0: [#text(8pt)[START]], q1: $1$, q2: $2$, q3: $3$, q4: [#text(8pt)[END]]),
+    layout: (q0: (-4, 0), q1: (0, 0), q4: (6, 0)),
+    style: (
+      state: (fill: gris, extrude: 0.75),
+      transition: (angle: 0deg),
+      q1-q3: (curve: 0),
+      q3-q2: (curve: 0, label: (dist: 0.40)),
+      q3-q3: (anchor: right),
+    ),
+  ))
+  Asi pues la ER final es $eps(eps union a b^+(a union b)a)^*(eps union a b^+(a union b)eps)$,
+  sin embargo podemos simplificar la expresión, pues $eps R = R$, $(eps union R)^* = R^*$ para obtener que
+  $
+    eps(eps union a b^*(a union b)a)^*(eps union a b^*(a union b)eps) = (a b^*(a union b)a)^*(eps union a b^*(a union b)),
+  $
+  que es la ER deseada.
+]
+
+
+
+#exercise[20 pts][
   Da una GLC que genere el lenguaje
   $
     A = {a^i b^j c^k: "donde" i=j " o " j=k "con" i, j, k >= 0}.
