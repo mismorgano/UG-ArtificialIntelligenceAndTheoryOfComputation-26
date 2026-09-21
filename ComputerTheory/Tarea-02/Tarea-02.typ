@@ -9,7 +9,7 @@
   title: [Tarea 2],
   student: [Antonio Barragán Romero],
   student_email: "antonio.barragan@cimat.mx",
-  date: datetime(day: 8, month: 9, year: 2025),
+  date: datetime(day: 8, month: 9, year: 2026),
 )
 #show: apply_definitions
 // #let eps =  $epsilon$
