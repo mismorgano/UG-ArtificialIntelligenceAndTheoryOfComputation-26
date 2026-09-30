@@ -33,6 +33,7 @@
 #let words = $Sigma^*$
 #let deriv = $attach(=>, tr:*)$
 #let eps = $epsilon$
+#let bs = $spacebar$
 #let gris = rgb("#e4e4e7") 
 #let cod(..X) = $angle.l #X.pos().join(",") angle.r)$
 #let exercise = exercise.with(supplement: "ejercicio")
