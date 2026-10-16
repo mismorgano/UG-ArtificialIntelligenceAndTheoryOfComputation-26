@@ -7,12 +7,12 @@
   title: [Tarea 4],
   student: [Antonio Barragán Romero],
   student_email: "antonio.barragan@cimat.mx",
-  date: datetime(day: 6, month: 10, year: 2025),
+  date: datetime(day: 15, month: 10, year: 2026),
 )
 #show: apply_definitions
 #exercise[
   Un _homomorfismo_ es una función $f:Sigma->Gamma^*$ de un alfabeto $Sigma$ a cadenas en otro alfabeto $Gamma$. Se
-  puede extender $f$ para transformar cadenas en $words$. Y de igual manera podemos convertir un lenguaje
+  puede extender $f$ para transformar cadenas en $words$ a cadenas en $Gamma^*$. Y de igual manera podemos convertir un lenguaje
   $L subset Sigma$ en un lenguaje $f(Sigma) = {f(w):w in L} subset Gamma^*$. Demuestra que los lenguajes decidibles no
   son cerrados bajo homomorfismo.
 ]
@@ -20,7 +20,7 @@
 
 #exercise[
   Prueba que un lenguaje $C$ es Turing-reconocible ssi existe un lenguaje decidible $D$ tq
-  $C = {x: exists y "tq" cod(x, y) }$.
+  $C = {x: exists y "tq" cod(x, y) in D }$.
 ]
 
 #exercise[
@@ -34,7 +34,7 @@
 #exercise[
   Muestre que $P$ y $N P$ son cerrados bajo la operación $space^*$.
 ]
-#exercise[
-  Muestre que $P R I M E S = {m : m "es un primo en binario"}$ es un lenguaje $N P$.
-]
+// #exercise[
+//   Muestre que $P R I M E S = {m : m "es un primo en binario"}$ es un lenguaje $N P$.
+// ]
 
